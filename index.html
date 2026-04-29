@@ -196,7 +196,7 @@
     <div id="chatBox" class="chat-box"></div>
 
     <div class="wa-footer">
-        <div id="countdown">Loading special surprise...</div>
+        <div id="countdown">Loading special ...</div>
     </div>
 </div>
 
@@ -212,7 +212,7 @@
         "2026-05-07": "Talking with you never feels forced or boring. There’s an ease in your words that makes conversations feel natural and enjoyable 😄",
         "2026-05-08": "There’s a positive energy around you that’s hard to ignore. Just your presence can make things feel a little better and brighter 😊",
         "2026-05-09": "There are still a few things about you that I haven’t said yet… maybe I was saving them for the right moment. Tomorrow might be that moment 😏",
-        "2026-05-10": "🎂 Happy Birthday Yoshini 💖 — There are so many little things about you that make you special in your own way. I truly admire who you are, and I hope you always stay this happy, genuine, and amazing ✨"
+        "2026-05-10": "Today is not just your birthday… it’s a reminder of how someone like you can make simple things feel special. There are so many small things about you — your smile, your voice, your way of being — that stay in my mind longer than I expect. I don’t say this often, but you are genuinely someone I admire. Stay the same… because that’s what makes you different ✨"
     };
 
     function addMessage(text, type="right", delay=0) {
@@ -224,27 +224,50 @@
             const now = new Date();
             const timeStr = now.getHours().toString().padStart(2, '0') + ":" + now.getMinutes().toString().padStart(2, '0');
             
-            msg.innerHTML = `${text} <span class="msg-info">${timeStr}</span>`;
+     msg.innerHTML = `${text} <span class="msg-info">${timeStr} ✔✔</span>`;
             
             chatBox.appendChild(msg);
             chatBox.scrollTop = chatBox.scrollHeight;
         }, delay);
     }
+function showTyping(delay = 0) {
+    setTimeout(() => {
+        const chatBox = document.getElementById("chatBox");
 
-    function showTodayMessage() {
-        const today = new Date().toISOString().split("T")[0];
-        const msg = messages[today];
+        const typing = document.createElement("div");
+        typing.classList.add("msg", "left");
+        typing.innerText = "typing...";
+        typing.id = "typing";
 
-        addMessage("Hey Yoshini 👀", "left", 600);
-        addMessage("Konjam wait pannuuu… surprise irukku 😏", "left", 1800);
+        chatBox.appendChild(typing);
+        chatBox.scrollTop = chatBox.scrollHeight;
+    }, delay);
+}
+
+function removeTyping() {
+    const typing = document.getElementById("typing");
+    if (typing) typing.remove();
+}
+ function showTodayMessage() {
+    const today = new Date().toISOString().split("T")[0];
+    const msg = messages[today];
+
+    addMessage("Hey Yoshini 👀", "left", 600);
+    addMessage("Konjam wait pannuuu… surprise irukku 😏", "left", 1800);
+
+    showTyping(2600);
+
+    setTimeout(() => {
+        removeTyping();
 
         if (msg) {
-            addMessage(msg, "right", 3200);
+            addMessage(msg, "right");
         } else {
-            addMessage("Wait pannuuu 😜 next surprise varudhu...", "left", 3200);
+            addMessage("Wait pannuuu 😜 next surprise varudhu...", "left");
         }
-    }
 
+    }, 4200);
+}
     function updateCountdown() {
         const now = new Date();
         const next = new Date();
