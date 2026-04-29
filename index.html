@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For Yoshini ❤️</title>
+
+    <style>
+        :root {
+            --wa-dark-header: #202c33;
+            --wa-dark-bg: #0b141a;
+            --wa-dark-left: #202c33;
+            --wa-dark-right: #005c4b;
+            --wa-text: #e9edef;
+            --wa-text-dim: #8696a0;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Helvetica, Arial, sans-serif;
+            background: #111b21;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        /* Floating Hearts Animation */
+        .hearts-bg {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* Chat Container */
+        .chat-container {
+            width: 100%;
+            max-width: 450px;
+            height: 100vh;
+            background: var(--wa-dark-bg);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* WhatsApp Dark Header */
+        .chat-header {
+            background: var(--wa-dark-header);
+            padding: 10px 16px;
+            color: var(--wa-text);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            height: 60px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.4);
+        }
+
+        .avatar {
+            width: 40px;
+            height: 40px;
+            background: #6a7175;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .header-info h2 {
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+        .header-info span {
+            font-size: 12px;
+            color: #00a884; /* WhatsApp online green */
+        }
+
+        /* Chat Box with Dark Wallpaper */
+        .chat-box {
+            flex: 1;
+            padding: 20px 16px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            background-image: url('https://user-images.githubusercontent.com/15075759/28719144-86dc0f70-73b1-11e7-911d-60d70fcded21.png');
+            background-blend-mode: overlay;
+            background-color: var(--wa-dark-bg);
+            scrollbar-width: none;
+        }
+
+        .chat-box::-webkit-scrollbar { display: none; }
+
+        /* Message Bubbles Dark Theme */
+        .msg {
+            max-width: 85%;
+            padding: 8px 12px;
+            font-size: 14.5px;
+            position: relative;
+            box-shadow: 0 1px 0.5px rgba(0,0,0,0.2);
+            animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+            opacity: 0;
+            color: var(--wa-text);
+            line-height: 1.4;
+        }
+
+        @keyframes popIn {
+            from { opacity: 0; transform: scale(0.9); translateY(10px); }
+            to { opacity: 1; transform: scale(1); translateY(0); }
+        }
+
+        .left {
+            background: var(--wa-dark-left);
+            align-self: flex-start;
+            border-radius: 0 8px 8px 8px;
+        }
+
+        .right {
+            background: var(--wa-dark-right);
+            align-self: flex-end;
+            border-radius: 8px 0 8px 8px;
+        }
+
+        /* Meta info inside bubble */
+        .msg-info {
+            display: block;
+            font-size: 10px;
+            text-align: right;
+            margin-top: 4px;
+            color: var(--wa-text-dim);
+        }
+
+        /* Footer Countdown */
+        .wa-footer {
+            background: #202c33;
+            padding: 15px;
+            text-align: center;
+            border-top: 1px solid #2f3b43;
+        }
+
+        #countdown {
+            font-size: 13px;
+            color: var(--wa-text-dim);
+            letter-spacing: 0.5px;
+        }
+
+        /* Dark Hearts */
+        .heart {
+            position: absolute;
+            color: #ff4d6d;
+            animation: floatUp 5s linear infinite;
+            font-size: 20px;
+            z-index: 2;
+            text-shadow: 0 0 10px rgba(255, 77, 109, 0.5);
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(110vh) rotate(0deg); opacity: 0; }
+            20% { opacity: 0.7; }
+            80% { opacity: 0.7; }
+            100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+        }
+
+        @media (min-width: 450px) {
+            .chat-container {
+                height: 90vh;
+                border-radius: 12px;
+                overflow: hidden;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="hearts-bg" id="heartsBg"></div>
+
+<div class="chat-container">
+    <div class="chat-header">
+        <div class="avatar">👩</div>
+        <div class="header-info">
+            <h2>Yoshini ❤️</h2>
+            <span>online</span>
+        </div>
+    </div>
+
+    <div id="chatBox" class="chat-box"></div>
+
+    <div class="wa-footer">
+        <div id="countdown">Loading special surprise...</div>
+    </div>
+</div>
+
+<script>
+    const messages = {
+        "2026-04-30": "Hi Yoshini 💖, I wanted to start something a little special from today. Just a small way to make your days feel a bit more meaningful 😊",
+        "2026-05-01": "There’s something about your smile that instantly changes the mood around me. It feels natural, warm, and honestly… a little unforgettable 🙂",
+        "2026-05-02": "Listening to your voice has a calming effect on me. No matter how the day goes, it somehow makes everything feel lighter and more peaceful 🎧",
+        "2026-05-03": "Your eyes have a quiet charm that’s hard to explain. It’s the kind of presence that makes people pause and notice, without even trying 😌",
+        "2026-05-04": "Your laugh is genuine and effortless, and that’s what makes it special. It’s the kind of sound that naturally brings a smile to others too 😄",
+        "2026-05-05": "What stands out the most is your personality. The way you carry yourself, simple yet confident, makes you truly different in a good way 💫",
+        "2026-05-06": "The way you think and express things is really impressive. There’s clarity and maturity in your words that I genuinely admire 😌",
+        "2026-05-07": "Talking with you never feels forced or boring. There’s an ease in your words that makes conversations feel natural and enjoyable 😄",
+        "2026-05-08": "There’s a positive energy around you that’s hard to ignore. Just your presence can make things feel a little better and brighter 😊",
+        "2026-05-09": "There are still a few things about you that I haven’t said yet… maybe I was saving them for the right moment. Tomorrow might be that moment 😏",
+        "2026-05-10": "🎂 Happy Birthday Yoshini 💖 — There are so many little things about you that make you special in your own way. I truly admire who you are, and I hope you always stay this happy, genuine, and amazing ✨"
+    };
+
+    function addMessage(text, type="right", delay=0) {
+        setTimeout(() => {
+            const chatBox = document.getElementById("chatBox");
+            const msg = document.createElement("div");
+            msg.classList.add('msg', type);
+            
+            const now = new Date();
+            const timeStr = now.getHours().toString().padStart(2, '0') + ":" + now.getMinutes().toString().padStart(2, '0');
+            
+            msg.innerHTML = `${text} <span class="msg-info">${timeStr}</span>`;
+            
+            chatBox.appendChild(msg);
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }, delay);
+    }
+
+    function showTodayMessage() {
+        const today = new Date().toISOString().split("T")[0];
+        const msg = messages[today];
+
+        addMessage("Hey Yoshini 👀", "left", 600);
+        addMessage("Konjam wait pannuuu… surprise irukku 😏", "left", 1800);
+
+        if (msg) {
+            addMessage(msg, "right", 3200);
+        } else {
+            addMessage("Wait pannuuu 😜 next surprise varudhu...", "left", 3200);
+        }
+    }
+
+    function updateCountdown() {
+        const now = new Date();
+        const next = new Date();
+        next.setHours(24,0,0,0);
+        const diff = next - now;
+
+        const h = Math.floor(diff / (1000*60*60));
+        const m = Math.floor((diff/(1000*60)) % 60);
+        const s = Math.floor((diff/1000) % 60);
+
+        document.getElementById("countdown").innerText = `Next message in ${h}h ${m}m ${s}s`;
+    }
+
+    function createHearts() {
+        const bg = document.getElementById('heartsBg');
+        const heartIcons = ['❤️', '💖', '✨', '💕'];
+        
+        const heart = document.createElement('div');
+        heart.classList.add('heart');
+        heart.innerHTML = heartIcons[Math.floor(Math.random() * heartIcons.length)];
+        heart.style.left = Math.random() * 100 + 'vw';
+        heart.style.fontSize = (Math.random() * 12 + 15) + 'px';
+        heart.style.animationDuration = (Math.random() * 2 + 5) + 's';
+        bg.appendChild(heart);
+        
+        setTimeout(() => heart.remove(), 6000);
+    }
+
+    // Run
+    showTodayMessage();
+    setInterval(updateCountdown, 1000);
+    setInterval(createHearts, 700);
+</script>
+
+</body>
+</html>
